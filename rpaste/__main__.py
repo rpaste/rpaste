@@ -2,7 +2,8 @@
 
 import sys
 
-from version import __version__
+from .version import __version__
+
 
 def main():
     print("RPaste version {}".format(__version__))
