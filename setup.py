@@ -9,7 +9,7 @@ setup(
     author='Anup Pokhrel',
     author_email='virtualanup@gmail.com',
     url='https://github.com/rpaste/rpaste',
-    download_url='https://github.com/virtualanup/hal/archive/{}.tar.gz'.format(
+    download_url='https://github.com/rpaste/rpaste/archive/{}.tar.gz'.format(
         version),
     keywords=['rpaste', 'paste', 'bin'],
     classifiers=[],
