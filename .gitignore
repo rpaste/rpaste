@@ -1,0 +1,13 @@
+*.pyc
+*~
+*.egg-info
+*.egg
+*.eggs
+*.pyc
+.coverage
+.coverage.*
+devdata
+build
+MANIFEST
+dist
+data
