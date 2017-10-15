@@ -1,16 +1,17 @@
 from distutils.core import setup
 
-version = '0.0.2'
+from rpaste.version import __version__
+
 setup(
     name='rpaste',
     packages=['rpaste'],
-    version=version,
+    version=__version__,
     description='Code Snippets Uploader',
     author='Anup Pokhrel',
     author_email='virtualanup@gmail.com',
     url='https://github.com/rpaste/rpaste',
     download_url='https://github.com/rpaste/rpaste/archive/{}.tar.gz'.format(
-        version),
+        __version__),
     keywords=['rpaste', 'paste', 'bin'],
     classifiers=[],
     entry_points={
