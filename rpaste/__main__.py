@@ -6,7 +6,6 @@ from .version import __version__
 
 
 def main():
-    print("RPaste version {}".format(__version__))
     return 0
 
 
