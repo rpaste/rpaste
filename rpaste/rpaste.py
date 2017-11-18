@@ -3,7 +3,9 @@ import requests
 
 class rpaste:
     def __init__(self):
-        pass
+        self.content = ""
+        self.password = ""
+        self.language = ""
 
     def set_content(self, content):
         self.content = content

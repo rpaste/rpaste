@@ -1,4 +1,5 @@
 import argparse
+import requests
 import pyperclip
 import os.path
 from .rpaste import rpaste
@@ -10,6 +11,8 @@ def main():
 
     group.add_argument('--push', nargs="*",
                        help='Push paste to rpaste.com')
+    group.add_argument('--languages', action="store_true",
+                       help='List languages available for syntax highlighting')
     group.add_argument('--pull', nargs=1,
                        help='Pull paste from rpaste.com')
 
@@ -37,10 +40,17 @@ def main():
                     print("File {} not found.".format(filename))
                 else:
                     paste = rpaste()
-                    paste.set_content(open(filename,"r").read())
+                    paste.set_content(open(filename, "r").read())
                     paste.upload()
 
     elif args.pull:
         pass
+    elif args.languages:
+        print("Available languages: ")
+        r = requests.get('https://rpaste.com/api/languages/list')
+
+        languages = r.json()
+        for language, slug in sorted(languages['languages']):
+            print(language, " - ", slug)
 
     return 0
