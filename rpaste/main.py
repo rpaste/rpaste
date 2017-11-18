@@ -1,12 +1,13 @@
-import argparse
-import sys
-import requests
-import pyperclip
-import os.path
 from .rpaste import rpaste
 
 
 def main():
+    import argparse
+    import sys
+    import requests
+    import pyperclip
+    import os.path
+
     parser = argparse.ArgumentParser(prog='rpaste')
     group = parser.add_mutually_exclusive_group(required=True)
 
@@ -20,7 +21,7 @@ def main():
                        help='Pull paste from rpaste.com')
 
     parser.add_argument('--password', nargs=1,
-                       help='Set password for the paste')
+                        help='Set password for the paste')
 
     parser.add_argument('--clip', action='store_true',
                         help='Use clipboard to push and pull paste')
