@@ -1,4 +1,5 @@
 import argparse
+import sys
 import requests
 import pyperclip
 import os.path
@@ -44,7 +45,10 @@ def main():
                     paste.set_content(pyperclip.paste())
                     paste.push_paste("Clipboard")
                 else:
-                    paste.set_content(input())
+                    inputcontent = ""
+                    for line in sys.stdin:
+                        inputcontent += line
+                    paste.set_content(inputcontent)
                     paste.push_paste("Input")
             except Exception as e:
                 print("ERROR : ", str(e))
