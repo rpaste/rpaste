@@ -1,6 +1,3 @@
-import requests
-from string import ascii_letters, digits
-
 
 class rpaste:
     def __init__(self):
@@ -52,6 +49,9 @@ class rpaste:
         raise Exception("Invalid slug : " + url)
 
     def push_paste(self, filename):
+        import requests
+        from string import ascii_letters, digits
+
         paste_create_url = "https://rpaste.com/api/paste/add"
         params = {}
         params['pastebody'] = self.content
@@ -64,11 +64,11 @@ class rpaste:
         content = resp.json()
 
         if 'errors' in content:
-            errors ="\n".join(content['errors'])
+            errors = "\n".join(content['errors'])
             raise Exception(errors)
 
         if content['status'] != "success":
-            raise Exception("Paste creation failed for "+filename)
+            raise Exception("Paste creation failed for " + filename)
 
         self.slug = content['slug']
         self.url = "https://rpaste.com/" + self.slug
@@ -81,6 +81,9 @@ class rpaste:
         print()
 
     def pull_paste(self):
+        import requests
+        from string import ascii_letters, digits
+
         params = {}
         if self.password:
             params['password'] = self.password
