@@ -13,8 +13,6 @@ setup(
     author='Anup Pokhrel',
     author_email='virtualanup@gmail.com',
     url='https://github.com/rpaste/rpaste',
-    download_url='https://github.com/rpaste/rpaste/archive/{}.tar.gz'.format(
-        __version__),
     keywords=['rpaste', 'paste', 'bin'],
     classifiers=[],
     entry_points={
