@@ -24,6 +24,4 @@ setup(
             "rpaste=rpaste:main",
         ]
     },
-    install_requires=[
-    ],
 )
