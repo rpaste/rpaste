@@ -3,12 +3,10 @@ try:
 except ImportError:
     from distutils.core import setup
 
-from rpaste.version import __version__
-
 setup(
     name='rpaste',
     packages=['rpaste'],
-    version=__version__,
+    version='0.1.4',
     description='Code Snippets Uploader',
     author='Anup Pokhrel',
     author_email='virtualanup@gmail.com',

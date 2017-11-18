@@ -1,13 +1,13 @@
+import argparse
+import sys
+import requests
+import pyperclip
+import os.path
+
 from .rpaste import rpaste
 
 
 def main():
-    import argparse
-    import sys
-    import requests
-    import pyperclip
-    import os.path
-
     parser = argparse.ArgumentParser(prog='rpaste')
     group = parser.add_mutually_exclusive_group(required=True)
 
