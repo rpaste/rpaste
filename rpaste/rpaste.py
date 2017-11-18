@@ -55,6 +55,7 @@ class rpaste:
         paste_create_url = "https://rpaste.com/api/paste/add"
         params = {}
         params['pastebody'] = self.content
+        params['pastetitle'] = self.title
         params['language'] = self.language
         params['exposure'] = "P"
         if self.password:
