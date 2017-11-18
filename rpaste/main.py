@@ -18,6 +18,14 @@ def main():
 
     parser.add_argument('--clip', action='store_true',
                         help='Use clipboard to push and pull paste')
+
+    parser.add_argument('--silent', action='store_true',
+                        help="Don't print in the console")
+
+    parser.add_argument('--detailed', action='store_true',
+                        help="Print all information about the paste in pull")
+
+
     args = parser.parse_args()
 
     if args.push is not None:
@@ -28,8 +36,8 @@ def main():
             if args.clip:
                 paste.set_content(pyperclip.paste())
             else:
-                paste = paste.set_content(input())
-            paste.upload()
+                paste.set_content(input())
+            paste.push_paste()
         else:
             if len(files) > 10:
                 print("Can only process 10 files at a time")
@@ -40,11 +48,31 @@ def main():
                     print("File {} not found.".format(filename))
                 else:
                     paste = rpaste()
-                    paste.set_content(open(filename, "r").read())
-                    paste.upload()
 
+                    try:
+                        content = open(filename, "r").read()
+                        paste.set_content(open(filename, "r").read())
+                        paste.push_paste()
+                    except IOError:
+                        print("Can't read {}".format(filename))
     elif args.pull:
-        pass
+        try:
+            paste = rpaste()
+            paste.set_url_slug(args.pull[0])
+            paste.pull_paste()
+            if args.clip:
+                # Copy paste content to clipboard
+                pyperclip.copy(paste.get_content())
+                print("paste copied to clipboard")
+            else:
+                if args.detailed:
+                    paste.print_info()
+                else:
+                    print(paste.get_content())
+        except Exception as e:
+            print("Error : ", str(e))
+            exit(1)
+
     elif args.languages:
         print("Available languages: ")
         r = requests.get('https://rpaste.com/api/languages/list')
