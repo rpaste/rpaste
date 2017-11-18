@@ -25,9 +25,6 @@ def main():
     parser.add_argument('--clip', action='store_true',
                         help='Use clipboard to push and pull paste')
 
-    parser.add_argument('--silent', action='store_true',
-                        help="Don't print in the console")
-
     parser.add_argument('--detailed', action='store_true',
                         help="Print all information about the paste in pull")
 
