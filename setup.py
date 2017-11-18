@@ -5,6 +5,9 @@ except ImportError:
 
 from rpaste.version import __version__
 
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
+
 setup(
     name='rpaste',
     packages=['rpaste'],
@@ -12,6 +15,7 @@ setup(
     description='Code Snippets Uploader',
     author='Anup Pokhrel',
     author_email='virtualanup@gmail.com',
+    install_requires=required,
     url='https://github.com/rpaste/rpaste',
     keywords=['rpaste', 'paste', 'bin'],
     classifiers=[],
