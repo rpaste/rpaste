@@ -6,9 +6,8 @@ class rpaste:
     def __init__(self):
         self.content = ""
         self.password = ""
-        self.language = ""
         self.title = ""
-        self.langauge = ""
+        self.language = "none"
         self.url = ""
         self.api_url = ""
         self.slug = ""
@@ -52,11 +51,40 @@ class rpaste:
             return
         raise Exception("Invalid slug : " + url)
 
-    def push_paste(self):
-        pass
+    def push_paste(self, filename):
+        paste_create_url = "https://rpaste.com/api/paste/add"
+        params = {}
+        params['pastebody'] = self.content
+        params['language'] = self.language
+        params['exposure'] = "P"
+        if self.password:
+            params['password'] = self.password
+
+        resp = requests.post(paste_create_url, params)
+        content = resp.json()
+
+        if 'errors' in content:
+            errors ="\n".join(content['errors'])
+            raise Exception(errors)
+
+        if content['status'] != "success":
+            raise Exception("Paste creation failed for "+filename)
+
+        self.slug = content['slug']
+        self.url = "https://rpaste.com/" + self.slug
+        self.api_url = "https://rpaste.com/api/paste/view/" + self.slug
+
+        print('"{}" Uploaded'.format(filename))
+        print("Slug: ", self.slug)
+        print("URL: ", self.url)
+        print("API URL: ", self.api_url)
+        print()
 
     def pull_paste(self):
-        resp = requests.post(self.api_url)
+        params = {}
+        if self.password:
+            params['password'] = self.password
+        resp = requests.post(self.api_url, params)
         content = resp.json()
         if 'Error' in content:
             raise Exception(content['Error'])

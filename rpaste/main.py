@@ -9,12 +9,17 @@ def main():
     parser = argparse.ArgumentParser(prog='rpaste')
     group = parser.add_mutually_exclusive_group(required=True)
 
-    group.add_argument('--push', nargs="*",
+    group.add_argument('--push', nargs="*", metavar="FILES",
                        help='Push paste to rpaste.com')
+
     group.add_argument('--languages', action="store_true",
                        help='List languages available for syntax highlighting')
+
     group.add_argument('--pull', nargs=1,
                        help='Pull paste from rpaste.com')
+
+    parser.add_argument('--password', nargs=1,
+                       help='Set password for the paste')
 
     parser.add_argument('--clip', action='store_true',
                         help='Use clipboard to push and pull paste')
@@ -25,19 +30,25 @@ def main():
     parser.add_argument('--detailed', action='store_true',
                         help="Print all information about the paste in pull")
 
-
     args = parser.parse_args()
 
     if args.push is not None:
         files = args.push
         if not files:
-            # Get input from the console
-            paste = rpaste()
-            if args.clip:
-                paste.set_content(pyperclip.paste())
-            else:
-                paste.set_content(input())
-            paste.push_paste()
+            try:
+                # Get input from the console
+                paste = rpaste()
+                if args.password:
+                    paste.set_password(args.password)
+                if args.clip:
+                    paste.set_content(pyperclip.paste())
+                    paste.push_paste("Clipboard")
+                else:
+                    paste.set_content(input())
+                    paste.push_paste("Input")
+            except Exception as e:
+                print("ERROR : ", str(e))
+                exit(1)
         else:
             if len(files) > 10:
                 print("Can only process 10 files at a time")
@@ -48,17 +59,23 @@ def main():
                     print("File {} not found.".format(filename))
                 else:
                     paste = rpaste()
-
+                    if args.password:
+                        paste.set_password(args.password)
                     try:
                         content = open(filename, "r").read()
                         paste.set_content(open(filename, "r").read())
-                        paste.push_paste()
+                        paste.push_paste(filename)
                     except IOError:
                         print("Can't read {}".format(filename))
+                    except Exception as e:
+                        print("Error : ", str(e))
     elif args.pull:
         try:
             paste = rpaste()
             paste.set_url_slug(args.pull[0])
+            if args.password:
+                paste.set_password(args.password)
+
             paste.pull_paste()
             if args.clip:
                 # Copy paste content to clipboard
